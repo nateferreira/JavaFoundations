@@ -25,6 +25,7 @@ public class Desafio03 {
             System.out.println("Você errou.");
             System.out.print("O número é " + maquina);
         }
+
         sc.close();
     }
 }
