@@ -9,25 +9,23 @@ public class Desafio3 {
         //Peça ao usuário números até que ele digite 0. Calcule e exiba a média dos números digitados.
 
     Scanner sc = new Scanner(System.in);
-        int soma = 0;
+        double soma = 0;
+        int contator = 0;
 
-        for (int i = 1; i <= 4; i++) {
+
+        while (true) {
             System.out.print("Digite um número: ");
-            int numero = sc.nextInt();
-            int resto = numero % 2;
+            double numero = sc.nextInt();
 
-            if (numero == 0) {
-                System.out.println("Programa finalizado");
-                break;
-            } else {
+            if (numero == 0) break;{
                 soma += numero;
+                contator++;
             }
-
-            int soma2 = soma / 4;
-            System.out.println("A média dos números somados é " + soma2);
-
+            System.out.println("A média é igual a " + soma / contator);
         }
+
     sc.close();
+
     }
 }
 
