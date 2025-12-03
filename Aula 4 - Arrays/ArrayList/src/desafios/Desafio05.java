@@ -1,7 +1,6 @@
 package desafios;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Desafio05 {
     public static void main(String[] args) {
@@ -14,18 +13,42 @@ public class Desafio05 {
         // Palavras com comprimento par: [Python, Aplicação]
         // Palavras com comprimento ímpar: [Java, App]
 
-        Scanner sc = new Scanner(System.in);
-        String compra = sc.nextLine();
-        ArrayList<String> compras = new ArrayList<>();
 
-        System.out.println("Adicionar item na sacola: ");
-        compras.add(compra);
+        ArrayList<String> listaPar = new ArrayList<>();
+        ArrayList<String> listaImpar = new ArrayList<>();
 
+        ArrayList<String> lista = new ArrayList<>();
+        lista.add("Caneta");
+        lista.add("Caderno");
+        lista.add("Copo");
+        lista.add("Relógio");
+        lista.add("Lâmpada");
+        lista.add("Chave");
+        lista.add("Telefone");
+        lista.add("Bola");
+        lista.add("Espelho");
+        lista.add("Guitarra");
 
+        lista.sort(Comparator.comparingInt(String::length));
 
+        for (String palavra : lista) {
 
+            if (palavra.length() % 2 == 0) {
+                listaPar.add(palavra);
+            } else {
+                listaImpar.add(palavra);
+            }
+        }
+            System.out.println("Palavras ordenadas por comprimento: ");
+            System.out.println(lista);
 
+            System.out.println("Palavras com comprimento par: ");
+            System.out.println(listaPar);
 
-
+            System.out.println("Palavras com comprimento impar: ");
+            System.out.println(listaImpar);
+        }
     }
-}
+
+
+
