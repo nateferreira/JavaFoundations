@@ -60,24 +60,29 @@ public class CrudAvançado {
 
                     System.out.println("Nome do aluno: ");
                     String novoNomeAluno = sc.nextLine();
+                    sc.nextLine();
 
                     System.out.println("Idade do aluno: ");
                     int novaIdadeAluno = sc.nextInt();
+                    sc.nextLine();
 
                     System.out.println("Digite a nota do aluno: ");
                     double novaNotaAluno = sc.nextDouble();
+                    sc.nextLine();
 
                     nomesAlunos.set(idAluno, novoNomeAluno);
                     notasAlunos.set(idAluno, novaNotaAluno);
-                    idadesAlunos.set(idAluno, novaIdadeAluno;
+                    idadesAlunos.set(idAluno, novaIdadeAluno);
 
                     System.out.println("Aluno atualizado com sucesso!");
                     break;
+
                 case 4:
                     System.out.println("\n----Excluir Cadastro----");
                     System.out.println("Digite o ID do aluno: ");
                     int idRemover  = sc.nextInt();
                     sc.nextLine();
+
                     nomesAlunos.remove(idRemover);
                     notasAlunos.remove(idRemover);
                     idadesAlunos.remove(idRemover);
