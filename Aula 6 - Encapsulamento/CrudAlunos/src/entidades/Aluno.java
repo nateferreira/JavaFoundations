@@ -6,36 +6,31 @@ public class Aluno {
     private double nota;
     private double nota2;
 
-    // Constructor
+    // Constructor, para inicializar os objetos
     public Aluno(String nome, double nota, double nota2) {
         this.nome = nome;
         this.nota = nota;
         this.nota2 = nota2;
     }
 
-    // Getters e Setters
+    // Getters e Setters, retornar um valor quando um atributo é privado
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-
     public double getNota() {
         return nota;
     }
-
     public void setNota(double nota) {
         this.nota = nota;
     }
 
-
     public double getNota2() {
         return nota2;
     }
-
     public void setNota2(double nota2) {
         this.nota2 = nota2;
     }
