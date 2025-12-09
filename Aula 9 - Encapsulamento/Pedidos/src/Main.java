@@ -1,41 +1,48 @@
+import entidades.Cardapio;
 import entidades.GerenciarPedidos;
-import entidades.Pedidos;
+import entidades.Lanche;
+import entidades.Pedido;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        Cardapio cd = new Cardapio();
         GerenciarPedidos gerenciarPedidos = new GerenciarPedidos();
 
         int opcao;
 
         while(true){
-            System.out.println("\n---Menu de Lanches---");
-            System.out.println("1 - Cadastrar pedido");
-            System.out.println("2 - Consultar pedido");
+            System.out.println("\n---Sistema de Pedidos---");
+            System.out.println("1 - Adicionar item");
+            System.out.println("2 - Listar item");
             System.out.println("3 - Atualizar pedido");
-            System.out.println("4 - Cancelar pedidos");
-            System.out.println("5 - Sair");
+            System.out.println("4 - Excluir item");
+            System.out.println("5 - Valor total");
+            System.out.println("6 - Sair");
             System.out.println("\nEscolha uma opcao: ");
             opcao = sc.nextInt();
             sc.nextLine();
 
             switch(opcao){
                 case 1 -> {
-                    System.out.println("Digite o nome do lanche: ");
-                    String lanche = sc.nextLine();
+                    cd.exibirLanches();
 
-                    System.out.println("Informe a quantidade: ");
+                    System.out.println("Digite o id do lanche: ");
+                    int opcaoLanche = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("Digite a quantidade: ");
                     int quantidade = sc.nextInt();
                     sc.nextLine();
 
-                    System.out.println("Informe o valor R$: ");
-                    double preco = sc.nextDouble();
-                    sc.nextDouble();
+                    var lanche = cd.getLanche(opcaoLanche);
+                    Pedido pedido = new Pedido(lanche.getLanche());
 
-                    Pedidos pedido = new Pedidos (lanche, preco, quantidade);
-                    gerenciarPedidos.adicionarPedidos(pedido);
+
+                    Lanche pedido = new Lanche(lanche, preco);
+                    gerenciarPedidos.adicionarPedido(pedido);
                 }
 
                 case 2 -> {
@@ -50,15 +57,11 @@ public class Main {
                     System.out.println("Informe o nome do lanche: ");
                     String nomeLanche = sc.nextLine();
 
-                    System.out.println("Informe a quantidade do lanche: ");
-                    int quantidadeLanche = sc.nextInt();
-                    sc.nextLine();
-
                     System.out.println("Informe o valor do lanche: ");
                     double valorLanche = sc.nextDouble();
                     sc.nextLine();
 
-                    gerenciarPedidos.atualizarPedido(numeroPedido, nomeLanche, quantidadeLanche, valorLanche);
+                    gerenciarPedidos.atualizarPedido(numeroPedido, nomeLanche, valorLanche);
                 }
 
                 case 4 -> {
@@ -70,6 +73,10 @@ public class Main {
                 }
 
                 case 5 -> {
+
+                }
+
+                case 6 -> {
                     System.out.println("\nObrigado e volte sempre =)");
                 }
 
