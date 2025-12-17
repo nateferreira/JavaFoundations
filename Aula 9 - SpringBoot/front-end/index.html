@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Produtos - Youcom</title>
+
+  <!-- Link do Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f4f4f9;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 10px;
+    }
+
+    .card-title {
+      color: #1f1f1f;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+    }
+
+    .btn-primary {
+      background-color: #ff4d6b;
+      border-color: #ff4d6b;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background-color: #ff1e3a;
+      border-color: #ff1e3a;
+    }
+
+    #response {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #4f4f4f;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 768px) {
+      .col-md-6 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg p-4">
+          <h4 class="card-title text-center mb-4">Cadastro de Produto</h4>
+          <form id="product-form">
+            <!-- Tipo -->
+            <div class="mb-3">
+              <label for="tipo" class="form-label">Tipo</label>
+              <select id="tipo" class="form-select" required>
+                <option value="" disabled selected>Escolha um tipo</option>
+                <option value="Camisa">Camisa</option>
+                <option value="Blusa">Blusa</option>
+                <option value="Suéter">Suéter</option>
+              </select>
+            </div>
+            <!-- Quantidade -->
+            <div class="mb-3">
+              <label for="quantidade" class="form-label">Quantidade</label>
+              <input type="number" id="quantidade" class="form-control" required min="1">
+            </div>
+            <!-- Valor -->
+            <div class="mb-3">
+              <label for="valor" class="form-label">Valor</label>
+              <input type="number" id="valor" class="form-control" required step="0.01">
+            </div>
+            <!-- Tamanho -->
+            <div class="mb-3">
+              <label for="tamanho" class="form-label">Tamanho</label>
+              <select id="tamanho" class="form-select" required>
+                <option value="" disabled selected>Escolha um tamanho</option>
+                <option value="PP">PP</option>
+                <option value="P">P</option>
+                <option value="M">M</option>
+                <option value="G">G</option>
+                <option value="GG">GG</option>
+              </select>
+            </div>
+            <!-- Marca -->
+            <div class="mb-3">
+              <label for="marca" class="form-label">Marca</label>
+              <input type="text" id="marca" class="form-control" required>
+            </div>
+            <!-- Botão de envio -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultado da resposta da API -->
+    <div class="mt-5">
+      <h5>Resposta da API:</h5>
+      <pre id="response" class="bg-light p-3 border"></pre>
+    </div>
+  </div>
+
+  <!-- Link do JavaScript do Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+    document.getElementById('product-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Evita o envio padrão do formulário
+
+      // Coletando dados do formulário
+      const tipo = document.getElementById('tipo').value;
+      const quantidade = parseInt(document.getElementById('quantidade').value, 10);
+      const valor = parseFloat(document.getElementById('valor').value);
+      const tamanho = document.getElementById('tamanho').value;
+      const marca = document.getElementById('marca').value;
+
+      // Validando se os campos estão preenchidos corretamente
+      if (!tipo || !quantidade || !valor || !tamanho || !marca) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      // Dados a serem enviados para a API
+      const produto = {
+        tipo: tipo,
+        quantidade: quantidade,
+        valor: valor,
+        tamanho: tamanho,
+        marca: marca
+      };
+
+      // Enviando os dados via Fetch API
+      fetch('http://localhost:8080/roupas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(produto)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Exibindo a resposta da API
+        document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById('response').textContent = `Erro: ${error.message}`;
+      });
+    });
+  </script>
+</body>
+
+</html>
