@@ -163,11 +163,12 @@
         },
         body: JSON.stringify(produto)
       })
-      .then(response => response.json())
-      .then(data => {
-        // Exibindo a resposta da API
-        document.getElementById('response').textContent = JSON.stringify(data, null, 2);
-      })
+      .then(response => {
+                if (response.ok) {
+                    document.getElementById("resposta").textContent =
+                        "Produto cadastrado com sucesso!";
+                }
+            })
       .catch(error => {
         document.getElementById('response').textContent = `Erro: ${error.message}`;
       });

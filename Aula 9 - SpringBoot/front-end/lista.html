@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+            background-color: #e8f5e9;
+        }
+
+        .error {
+            color: red;
+            background-color: #f8d7da;
+        }
+
+        .no-data {
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Consulta de Produtos</h1>
+
+    <!-- Tabela onde os produtos serão exibidos -->
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Tamanho</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody id="productList">
+            <!-- Produtos serão listados aqui -->
+        </tbody>
+    </table>
+
+    <!-- Mensagens de Sucesso ou Erro -->
+    <div id="messageContainer"></div>
+
+    <script>
+        // Função para consumir a API e preencher a tabela
+        async function fetchProducts() {
+            try {
+                // URL da API (substitua pelo endpoint real)
+                const response = await fetch('http://localhost:8080/roupas');
+                
+                // Verifica se a resposta foi bem-sucedida
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os produtos');
+                }
+
+                // Obtém os dados da resposta
+                const products = await response.json();
+
+                // Limpa a lista de mensagens e tabela
+                document.getElementById('productList').innerHTML = '';
+                document.getElementById('messageContainer').innerHTML = '';
+
+                // Verifica se a resposta contém produtos
+                if (products.length === 0) {
+                    document.getElementById('messageContainer').innerHTML = '<div class="message error">Nenhum produto encontrado</div>';
+                } else {
+                    // Preenche a tabela com os produtos
+                    const tableBody = document.getElementById('productList');
+                    products.forEach(product => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${product.id}</td>
+                            <td>${product.tipo}</td>
+                            <td>${product.marca}</td>
+                            <td>${product.tamanho}</td>
+                            <td>${product.quantidade}</td>
+                            <td>R$ ${product.valor}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    document.getElementById('messageContainer').innerHTML = '<div class="message success">Produtos carregados com sucesso!</div>';
+                }
+            } catch (error) {
+                // Exibe mensagem de erro caso algo falhe
+                document.getElementById('messageContainer').innerHTML = `<div class="message error">${error.message}</div>`;
+            }
+        }
+
+        // Chama a função quando a página for carregada
+        window.onload = fetchProducts;
+    </script>
+
+</body>
+</html>
